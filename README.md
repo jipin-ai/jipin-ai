@@ -13,16 +13,40 @@
 <br>
 
 ```
-                      +-----------+
-                      | Architect |      <- 本地工作站，SSH 反向隧道接入
-                      +-----+-----+
-                            :  治理 / 元管理（不入管道，不被审查）
-                            :
-   G1                       v                                       G2
-   |                  +-----------+                                 |
- +-------+    EARS    |           |   dispatch   +-------+  build   +-------+  verify   +--------+
- | BA-01 | ---------> |   ORC-01  | -----------> | DEV-01| -------> | QA-01 | --------> | DEMO-01|
- +-------+            +-----------+              +-------+          +-------+           +--------+
++-----------+
+| Architect | <- local workstation, SSH reverse tunnel
++-----------+
+    :  governance only (not in pipeline)
+    v
++-----------+
+|   BA-01   |
++-----------+
+    |
+    | [G1] five-questions gate
+    v
++-----------+
+|   ORC-01  |
++-----------+
+    |
+    | dispatch
+    v
++-----------+
+|   DEV-01  |
++-----------+
+    |
+    | build done
+    v
++-----------+
+|   QA-01   |
++-----------+
+    |
+    | [G2] dual-confirm gate
+    v
++-----------+
+|  DEMO-01  |
++-----------+
+
+comm: A2A / JSON-RPC   state: SQLite state machine
 ```
 
 五台云端 ECS 各跑一个角色；架构师在本地，只管治理不进流水线。G1 = 五问门禁 · G2 = 双确认门禁 · 通信 = A2A (JSON-RPC) · 状态 = SQLite 状态机。
