@@ -46,7 +46,7 @@
 
 ### 联系
 
-<a href="mailto:yining@ctgc.com.cn">yining@ctgc.com.cn</a> · Beijing
+<a href="mailto:shihetongtai@gmail.com">shihetongtai@gmail.com</a> · Beijing
 
 <br>
 
