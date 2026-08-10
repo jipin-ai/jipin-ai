@@ -16,32 +16,32 @@
 +-----------+
 | Architect | <- local workstation, SSH reverse tunnel
 +-----------+
-    :  governance only (not in pipeline)
-    v
+     :  governance only (not in pipeline)
+     v
 +-----------+
 |   BA-01   |
 +-----------+
-    |
-    | [G1] five-questions gate
-    v
+     |
+     | [G1] five-questions gate
+     v
 +-----------+
 |   ORC-01  |
 +-----------+
-    |
-    | dispatch
-    v
+     |
+     | dispatch
+     v
 +-----------+
 |   DEV-01  |
 +-----------+
-    |
-    | build done
-    v
+     |
+     | build done
+     v
 +-----------+
 |   QA-01   |
 +-----------+
-    |
-    | [G2] dual-confirm gate
-    v
+     |
+     | [G2] dual-confirm gate
+     v
 +-----------+
 |  DEMO-01  |
 +-----------+
@@ -57,7 +57,9 @@ comm: A2A / JSON-RPC   state: SQLite state machine
 
 ### 主线项目
 
-**agent-pipeline-engine** — 多 Agent 管道引擎：YAML 配置驱动 + SQLite 状态机门禁 + cron 调度，零外部依赖纯标准库。本连载全部代码沉淀于此。
+**[agent-pipeline-engine](https://github.com/jipin-ai/agent-pipeline-engine)** — 多 Agent 管道引擎：YAML 配置驱动 + SQLite 状态机门禁 + cron 调度，零外部依赖纯标准库。本连载全部代码沉淀于此。
+
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=jipin-ai&repo=agent-pipeline-engine)](https://github.com/jipin-ai/agent-pipeline-engine)
 
 最近：给 [Hermes Agent](https://github.com/NousResearch/hermes-agent)（NousResearch）提交了中文文档 PR。
 
