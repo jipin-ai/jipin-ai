@@ -51,6 +51,8 @@ comm: A2A / JSON-RPC   state: SQLite state machine
 
 五台云端 ECS 各跑一个角色；架构师在本地，只管治理不进流水线。G1 = 五问门禁 · G2 = 双确认门禁 · 通信 = A2A (JSON-RPC) · 状态 = SQLite 状态机。
 
+🖥️ **交互版架构图**（Archify 渲染，Dispatcher 时代生产实拍）：[pipeline-architecture.html](https://jipin-ai.github.io/pipeline-architecture.html) · 连载站点：[jipin-ai.github.io](https://jipin-ai.github.io/)
+
 <br>
 
 ---
