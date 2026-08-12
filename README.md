@@ -13,43 +13,34 @@
 <br>
 
 ```
-+-----------+
-| Architect | <- local workstation, SSH reverse tunnel
-+-----------+
-     :  governance only (not in pipeline)
-     v
-+-----------+
-|   BA-01   |
-+-----------+
-     |
-     | [G1] five-questions gate
-     v
-+-----------+
-|   ORC-01  |
-+-----------+
-     |
-     | dispatch
-     v
-+-----------+
-|   DEV-01  |
-+-----------+
-     |
-     | build done
-     v
-+-----------+
-|   QA-01   |
-+-----------+
-     |
-     | [G2] dual-confirm gate
-     v
-+-----------+
-|  DEMO-01  |
-+-----------+
+        Boss / Architect (5080)
+        ctgc CLI: approve / verify / cancel
+                      |
+                      v
++--------------------------------------------------+
+|  CI-01 Dispatcher          123.56.25.232:8800    |
+|                                                  |
+|  FastAPI  <-  Bearer token + IP whitelist        |
+|      |                                           |
+|  dispatch_loop  (systemd timer, every 30s)       |
+|      |                                           |
+|  gate_judge  =  evidence gate (no self-report)   |
+|      |                                           |
+|  pipeline.db (SQLite WAL)  +  docs/ storage      |
++--------------------------------------------------+
+       ^         ^                         |
+       | HTTP    | PATCH evidence          | alerts
+       | PULL    | commit / report / URL   v
++-------+--------+-------+-------+---------+     +--------+
+| BA-01 | ORC-01 | DEV-01| QA-01 | DEMO-01 | --> | Feishu |
++-------+--------+-------+-------+---------+     +--------+
+   EARS -> split -> code -> test -> deploy
 
-comm: A2A / JSON-RPC   state: SQLite state machine
+degradation: retry 30s/60s/120s -> P2 skip -> rollback once
+             -> escalate_human (Feishu alert)
 ```
 
-五台云端 ECS 各跑一个角色；架构师在本地，只管治理不进流水线。G1 = 五问门禁 · G2 = 双确认门禁 · 通信 = A2A (JSON-RPC) · 状态 = SQLite 状态机。
+五台云端 ECS 各跑一个角色，每 3 分钟主动向 CI-01 领任务、交证据；架构师在本地只管治理。门禁 = 证据不齐不放行（不信自报）· 状态 = SQLite 状态机（Dispatcher 独占直写）· 告警 = 飞书群 @路由。
 
 🖥️ **交互版架构图**（Archify 渲染，Dispatcher 时代生产实拍）：[pipeline-architecture.html](https://jipin-ai.github.io/pipeline-architecture.html) · 连载站点：[jipin-ai.github.io](https://jipin-ai.github.io/)
 
