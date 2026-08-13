@@ -18,7 +18,7 @@
                       |
                       v
 +--------------------------------------------------+
-|  CI-01 Dispatcher          123.56.25.232:8800    |
+|  CI-01 Dispatcher         (address withheld)    |
 |                                                  |
 |  FastAPI  <-  Bearer token + IP whitelist        |
 |      |                                           |
